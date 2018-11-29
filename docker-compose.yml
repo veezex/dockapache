@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+              
+    # database
+    db-ubr:
+        container_name: db-ubr
+        build: ./db
+        env_file: .env
+        restart: always
+        ports:
+            - "6306:3306"
+        volumes:
+            - ./dbdata:/var/lib/mysql
+
+    # webserver
+    webserv-ubr:
+        container_name: webserv-ubr
+        build: ./apache
+        depends_on:
+            - db-ubr
+        ports:
+            - "80:80"
+            - "443:443"
+            - "9000:9000"
+        volumes:
+            - type: bind
+              source: ${APP_PATH}
+              target: /var/www/html
