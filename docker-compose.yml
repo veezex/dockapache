@@ -7,7 +7,6 @@ services:
         container_name: db-ubr
         build: ./db
         env_file: .env
-        restart: always
         ports:
             - "6306:3306"
         volumes:
